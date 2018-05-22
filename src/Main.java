@@ -1,53 +1,42 @@
-import java.util.List;
-import java.util.ArrayList;
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by AlanBi on 5/17/18.
  */
 public class Main extends JFrame {
 
-    private List<Planet> planets;
+    private Simulation sim;
+
+    public static final int X = 800;
+    public static final int Y = 600;
 
     public Main() {
-        setSize(800, 600);
+        setSize(X, Y);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //setLayout(new BorderLayout());
-        //getContentPane().setLayout(null);
-        setLocationRelativeTo(null);
-        planets = new ArrayList<>();
+        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
+
+        sim = new Simulation();
+        add(sim);
+        add(new Panel(X / 4, Y));
     }
 
     public static void main(String[] args) throws InterruptedException {
         Main main = new Main();
         main.setVisible(true);
 
-        main.addPlanet(new Planet(300, 100, 1.2, 0, 6e24));
-        main.addPlanet(new Planet(300, 200, 2, 0, 2e30));
-        main.addPlanet(new Planet(500, 300, 2, 0, 2e60));
+        main.addPlanet(new Planet(300, 50, 3e4, 0, 6e24));
+        main.addPlanet(new Planet(300, 200, 0, 0, 2e30));
 
         while (true) {
             Thread.sleep(5);
-
-            List<Planet> planets = main.getPlanets();
-            for (Planet p : planets) {
-                p.update(planets);
-            }
             main.repaint();
             main.revalidate();
         }
     }
 
     public void addPlanet(Planet p) {
-        add(p);//, BorderLayout.PAGE_START);
-        planets.add(p);
+        sim.addPlanet(p);
     }
-
-    public List<Planet> getPlanets() {
-        return planets;
-    }
-
 }
 
 
