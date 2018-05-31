@@ -1,16 +1,17 @@
+import java.awt.*;
 import java.util.List;
 
 /**
  * Created by AlanBi on 5/17/18.
  */
-public class Planet {
+public class Planet implements Cloneable {
     public double x;
     public double y;
-    private double xSpeed;
-    private double ySpeed;
+    public double xSpeed;
+    public double ySpeed;
 
-    private final double mass;
-    public final int radius;
+    public double mass;
+    public int radius;
 
     public static final double G = 6.67e-11;
 
@@ -21,7 +22,16 @@ public class Planet {
         this.ySpeed = ySpeed / Simulation.DISTANCE_SCALE;
         this.mass = mass;
 
-        this.radius = (int) Math.log(mass) / 5;
+        this.radius = planetRadius(this.mass);
+    }
+
+    public Planet(Planet p) {
+        x = p.x;
+        y = p.y;
+        xSpeed = p.xSpeed / Simulation.DISTANCE_SCALE;
+        ySpeed = p.ySpeed / Simulation.DISTANCE_SCALE;
+        mass = p.mass;
+        radius = p.radius;
     }
 
     public void update(List<Planet> planets, double timeMultiplier) {
@@ -43,5 +53,9 @@ public class Planet {
 
     private double distance(Planet p1, Planet p2) {
         return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)) * 1e9;
+    }
+
+    public static int planetRadius(double mass) {
+        return (int) Math.log(mass) / 5;
     }
 }
