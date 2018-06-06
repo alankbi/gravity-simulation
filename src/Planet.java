@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by AlanBi on 5/17/18.
@@ -13,7 +14,11 @@ public class Planet implements Cloneable {
     public double mass;
     public int radius;
 
+    public Color color;
+
     public static final double G = 6.67e-11;
+    public static final Color[] colors = {Color.WHITE, Color.YELLOW, Color.CYAN, Color.ORANGE, Color.GREEN};
+
 
     public Planet(double x, double y, double xSpeed, double ySpeed, double mass) {
         this.x = x;
@@ -23,6 +28,7 @@ public class Planet implements Cloneable {
         this.mass = mass;
 
         this.radius = planetRadius(this.mass);
+        this.color = colors[new Random().nextInt(colors.length)];
     }
 
     public Planet(Planet p) {

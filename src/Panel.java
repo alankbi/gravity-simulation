@@ -19,18 +19,20 @@ public class Panel extends JPanel {
     public Planet newPlanet;
     public boolean addPlanet;
     public boolean showPlanet;
+    public boolean reset;
 
     private String xSpeed;
     private String ySpeed;
     private String mass;
 
-    public Panel(int X, int Y) {
+    public Panel(int X, int Y, int sim_X, int sim_Y) {
         this.X = X;
         this.Y = Y;
 
         newPlanet = new Planet(0, 0, 0, 0, 0);
         addPlanet = false;
         showPlanet = true;
+        reset = false;
 
         xSpeed = "0e0";
         ySpeed = "0e0";
@@ -38,30 +40,35 @@ public class Panel extends JPanel {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        setPreferredSize(new Dimension(X, Y));
+        setMaximumSize(new Dimension(X, Y));
 
         JPanel planetsPanel = new JPanel();
         planetsPanel.setLayout(new BoxLayout(planetsPanel, BoxLayout.Y_AXIS));
         planetsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        planetsPanel.setMaximumSize(new Dimension(X, 2 * Y / 3));
+        planetsPanel.setPreferredSize(new Dimension(X, 2 * Y / 3));
+
+        JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(X, Y / 5));
 
         JLabel label = new JLabel("Add New Planet");
-        label.setPreferredSize(new Dimension(X, Y / 10));
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        planetsPanel.add(label);
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.add(label);
 
         JCheckBox checkBox = new JCheckBox("Show Planet");
         checkBox.setSelected(true);
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
         checkBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 showPlanet = checkBox.isSelected();
             }
         });
-        planetsPanel.add(checkBox);
 
-        planetsPanel.add(makePositionSlider("X", Main.X - X));
-        planetsPanel.add(makePositionSlider("Y", Main.Y));
+        panel.add(checkBox);
+        planetsPanel.add(panel);
+
+        planetsPanel.add(makePositionSlider("X", sim_X - X));
+        planetsPanel.add(makePositionSlider("Y", sim_Y));
 
         planetsPanel.add(makeSpinner("X", false));
         planetsPanel.add(makeSpinner("Y", false));
@@ -77,15 +84,73 @@ public class Panel extends JPanel {
         });
         planetsPanel.add(addPlanetButton);
 
+        planetsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(planetsPanel);
 
 
         JPanel optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
         optionsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        optionsPanel.setMaximumSize(new Dimension(X, Y / 3));
+        optionsPanel.setPreferredSize(new Dimension(X, 2 * Y / 9));
 
+        JLabel scale = new JLabel(" 1 pixel is 10^9 meters");
+        scale.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel = new JPanel();
+        panel.add(scale);
+        optionsPanel.add(panel);
+
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setMaximumSize(new Dimension(X, Y / 16));
+
+        label = new JLabel(" Time");
+        label.setPreferredSize(new Dimension(X / 4, Y / 16));
+        panel.add(label);
+
+        JSlider slider = new JSlider(JSlider.HORIZONTAL,0, 8, 1);
+        slider.setMinimumSize(new Dimension(3 * X / 4, Y / 16));
+        slider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+                int value = slider.getValue();
+                Simulation.timeMultiplier = value * 1e4;
+            }
+        });
+
+        slider.setMajorTickSpacing(1);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+
+        panel.add(slider);
+
+        optionsPanel.add(panel);
+
+        JButton resetButton = new JButton("Reset Simulation");
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reset = true;
+            }
+        });
+        optionsPanel.add(resetButton);
+
+        optionsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(optionsPanel);
+
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        infoPanel.setPreferredSize(new Dimension(X, Y / 9));
+
+        label = new JLabel(" Physics Simulation");
+        label.setPreferredSize(new Dimension(X, Y / 18));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        infoPanel.add(label);
+        label = new JLabel(" Created by Alan Bi");
+        label.setPreferredSize(new Dimension(X, Y / 18));
+        infoPanel.add(label);
+
+        infoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        add(infoPanel);
     }
 
     public JPanel makePositionSlider(String axis, int maxValue) {

@@ -16,20 +16,22 @@ import java.util.List;
 public class Simulation extends JPanel implements ActionListener {
 
     private List<Planet> planets;
+    private int X;
+    private int Y;
+    private Timer timer;
 
     private Panel panel;
 
-    private double timeMultiplier;
-
-    private Timer timer;
-
+    public static double timeMultiplier = 1e4;
     public static final double DISTANCE_SCALE = 1e9;
 
-    public Simulation(Panel p) {
+    public Simulation(Panel p, int X, int Y) {
         panel = p;
+        this.X = X;
+        this.Y = Y;
 
         planets = new ArrayList<>();
-        timeMultiplier = 1e4;
+        //timeMultiplier = 1e4;
         timer = new Timer(5, this);
         timer.start();
     }
@@ -42,7 +44,13 @@ public class Simulation extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(Color.BLACK);
+        if (panel.reset) {
+            planets.clear();
+            panel.reset = false;
+        }
+
+        g.setColor(new Color(20, 20, 20));
+        g.fillRect(0, 0, X, Y);
 
         for (int i = 0; i < planets.size(); i++) {
             Planet p = planets.get(i);
@@ -51,6 +59,7 @@ public class Simulation extends JPanel implements ActionListener {
                 planets.remove(i--);
             } else {
                 p.update(planets, timeMultiplier);
+                g.setColor(p.color);
                 g.fillOval((int) p.x, (int) p.y, p.radius, p.radius);
             }
         }
