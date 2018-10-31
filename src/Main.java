@@ -40,8 +40,12 @@ public class Main extends JFrame {
         }
         main.setVisible(true);
 
-        main.addPlanet(new Planet(300, 50, 3e4, 0, 6e24));
-        main.addPlanet(new Planet(300, 200, 0, 0, 2e30));
+        main.addPlanet(new Planet(300, 200, 0, 0, 2e30)); // Sun
+
+        main.addPlanet(new Planet(300, 236, 5e4, 0, 3e23)); // Mercury
+        main.addPlanet(new Planet(300, 267, 3e4, 0, 5e24)); // Venus
+        main.addPlanet(new Planet(300, 293, 4e4, 0, 6e24)); // Earth
+        main.addPlanet(new Planet(300, 342, 2e4, 0, 6e23)); // Mars
     }
 
     public void addPlanet(Planet p) {
