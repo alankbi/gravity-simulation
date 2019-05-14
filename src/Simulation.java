@@ -55,19 +55,19 @@ public class Simulation extends JPanel implements ActionListener {
         for (int i = 0; i < planets.size(); i++) {
             Planet p = planets.get(i);
 
-            if (p.x > 2000 || p.x < 0 || p.y > 2000 || p.y < 0) {
+            if (p.transform.x > 2000 || p.transform.x < 0 || p.transform.y > 2000 || p.transform.y < 0) {
                 planets.remove(i--);
             } else {
                 p.update(planets, timeMultiplier);
                 g.setColor(p.color);
-                g.fillOval((int) p.x, (int) p.y, p.radius, p.radius);
+                g.fillOval((int) p.transform.x, (int) p.transform.y, p.radius, p.radius);
             }
         }
 
         if (panel.showPlanet) {
             g.setColor(Color.GRAY);
             Planet p = panel.newPlanet;
-            g.fillOval((int) p.x, (int) p.y, p.radius, p.radius);
+            g.fillOval((int) p.transform.x, (int) p.transform.y, p.radius, p.radius);
         }
         if (panel.addPlanet) {
             Planet tempPlanet = new Planet(panel.newPlanet);

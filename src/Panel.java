@@ -168,9 +168,9 @@ public class Panel extends JPanel {
             public void stateChanged(ChangeEvent event) {
                 int value = slider.getValue();
                 if (axis.equals("X")) {
-                    newPlanet.x = value;
+                    newPlanet.transform.x = value;
                 } else {
-                    newPlanet.y = value;
+                    newPlanet.transform.y = value;
                 }
             }
         });
@@ -214,10 +214,10 @@ public class Panel extends JPanel {
                 } else {
                     if (axis.equals("X")) {
                         xSpeed = value + "e" + xSpeed.substring(xSpeed.indexOf("e") + 1);
-                        newPlanet.xSpeed = Double.parseDouble(xSpeed);
+                        newPlanet.transform.xSpeed = Double.parseDouble(xSpeed);
                     } else {
                         ySpeed = value + "e" + ySpeed.substring(ySpeed.indexOf("e") + 1);
-                        newPlanet.ySpeed = Double.parseDouble(ySpeed);
+                        newPlanet.transform.ySpeed = Double.parseDouble(ySpeed);
                     }
                 }
             }
@@ -242,10 +242,10 @@ public class Panel extends JPanel {
                 } else {
                     if (axis.equals("X")) {
                         xSpeed = xSpeed.substring(0, xSpeed.indexOf("e") + 1) + value;
-                        newPlanet.xSpeed = Double.parseDouble(xSpeed);
+                        newPlanet.transform.xSpeed = Double.parseDouble(xSpeed);
                     } else {
                         ySpeed = ySpeed.substring(0, ySpeed.indexOf("e") + 1) + value;
-                        newPlanet.ySpeed = Double.parseDouble(ySpeed);
+                        newPlanet.transform.ySpeed = Double.parseDouble(ySpeed);
                     }
                 }
             }
