@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
@@ -29,7 +29,7 @@ public class Planet implements Cloneable {
     }
 
     public void update(List<Planet> planets, double timeMultiplier) {
-        PhysicsUtility.update(this, planets, timeMultiplier);
+        PhysicsUtility.updatePlanet(this, planets, timeMultiplier);
     }
 
     public static int planetRadius(double mass) {

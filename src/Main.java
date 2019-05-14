@@ -1,4 +1,5 @@
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 
 /**
  * Created by AlanBi on 5/17/18.
