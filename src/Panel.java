@@ -179,9 +179,9 @@ public class Panel extends JPanel {
             public void stateChanged(ChangeEvent event) {
                 int value = slider.getValue();
                 if (axis.equals("X")) {
-                    newPlanet.transform.x = value;
+                    newPlanet.getTransform().x = value;
                 } else {
-                    newPlanet.transform.y = value;
+                    newPlanet.getTransform().y = value;
                 }
             }
         });
@@ -220,15 +220,15 @@ public class Panel extends JPanel {
 
                 if (isMassSpinner) {
                     mass = value + "e" + mass.substring(mass.indexOf("e") + 1);
-                    newPlanet.mass = Double.parseDouble(mass);
-                    newPlanet.radius = Planet.planetRadius(newPlanet.mass);
+                    newPlanet.setMass(Double.parseDouble(mass));
+                    newPlanet.setRadius(Planet.planetRadius(newPlanet.getMass()));
                 } else {
                     if (axis.equals("X")) {
                         xSpeed = value + "e" + xSpeed.substring(xSpeed.indexOf("e") + 1);
-                        newPlanet.transform.xSpeed = Double.parseDouble(xSpeed);
+                        newPlanet.getTransform().xSpeed = Double.parseDouble(xSpeed);
                     } else {
                         ySpeed = value + "e" + ySpeed.substring(ySpeed.indexOf("e") + 1);
-                        newPlanet.transform.ySpeed = Double.parseDouble(ySpeed);
+                        newPlanet.getTransform().ySpeed = Double.parseDouble(ySpeed);
                     }
                 }
             }
@@ -248,15 +248,15 @@ public class Panel extends JPanel {
 
                 if (isMassSpinner) {
                     mass = mass.substring(0, mass.indexOf("e") + 1) + value;
-                    newPlanet.mass = Double.parseDouble(mass);
-                    newPlanet.radius = Planet.planetRadius(newPlanet.mass);
+                    newPlanet.setMass(Double.parseDouble(mass));
+                    newPlanet.setRadius(Planet.planetRadius(newPlanet.getMass()));
                 } else {
                     if (axis.equals("X")) {
                         xSpeed = xSpeed.substring(0, xSpeed.indexOf("e") + 1) + value;
-                        newPlanet.transform.xSpeed = Double.parseDouble(xSpeed);
+                        newPlanet.getTransform().xSpeed = Double.parseDouble(xSpeed);
                     } else {
                         ySpeed = ySpeed.substring(0, ySpeed.indexOf("e") + 1) + value;
-                        newPlanet.transform.ySpeed = Double.parseDouble(ySpeed);
+                        newPlanet.getTransform().ySpeed = Double.parseDouble(ySpeed);
                     }
                 }
             }
