@@ -29,7 +29,25 @@ public class Planet implements Cloneable {
     }
 
     public void update(List<Planet> planets, double timeMultiplier) {
-        PhysicsUtility.updatePlanet(this, planets, timeMultiplier);
+        this.transform.x += timeMultiplier * this.transform.xSpeed;
+        this.transform.y += timeMultiplier * this.transform.ySpeed;
+
+        for (Planet p : planets) {
+            if (this == p) {
+                continue;
+            }
+
+            double r = distance(this, p);
+            double gravity = Planet.G * this.mass * p.mass / (r * r);
+
+            this.transform.xSpeed += timeMultiplier * (p.transform.x - this.transform.x) / r * gravity / this.mass;
+            this.transform.ySpeed += timeMultiplier * (p.transform.y - this.transform.y) / r * gravity / this.mass;
+        }
+    }
+
+    private static double distance(Planet p1, Planet p2) {
+        return Math.sqrt((p1.transform.x - p2.transform.x) * (p1.transform.x - p2.transform.x) +
+                (p1.transform.y - p2.transform.y) * (p1.transform.y - p2.transform.y)) * 1e9;
     }
 
     public static int planetRadius(double mass) {

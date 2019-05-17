@@ -31,7 +31,25 @@ public class Particle implements Cloneable {
     }
 
     public void update(List<Particle> particles, double timeMultiplier) {
-        PhysicsUtility.updateParticle(this, particles, timeMultiplier);
+        this.transform.x += timeMultiplier * this.transform.xSpeed;
+        this.transform.y += timeMultiplier * this.transform.ySpeed;
+
+        for (Particle p : particles) {
+            if (this == p) {
+                continue;
+            }
+
+            double r = distance(this, p);
+            double force = Particle.K * this.charge * p.charge / (r * r);
+
+            this.transform.xSpeed += timeMultiplier * (p.transform.x - this.transform.x) * force / (this.mass * r);
+            this.transform.ySpeed += timeMultiplier * (p.transform.y - this.transform.y) * force / (this.mass * r);
+        }
+    }
+
+    private static double distance(Particle p1, Particle p2) {
+        return Math.sqrt((p1.transform.x - p2.transform.x) * (p1.transform.x - p2.transform.x) +
+                (p1.transform.y - p2.transform.y) * (p1.transform.y - p2.transform.y)) * 1e-9;
     }
 
     public static int particleRadius(double mass) {
