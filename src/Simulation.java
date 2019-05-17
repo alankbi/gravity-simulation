@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by AlanBi on 5/21/18.
  */
-public class Simulationg extends JPanel implements ActionListener {
+public class Simulation extends JPanel implements ActionListener {
 
     private List<Planet> planets;
     private int X;
