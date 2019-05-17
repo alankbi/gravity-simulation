@@ -1,13 +1,13 @@
 import java.util.List;
 
-public class PhysicsUtility {
+public class MovementManager<T extends PhysicsObject> {
 
-    public static void updatePlanet(Planet p, List<Planet> planets, double timeMultiplier) {
+    public void updatePlanet(T p, List<T> planets, double timeMultiplier) {
         Transform transform = p.getTransform();
         transform.x += timeMultiplier * transform.xSpeed;
         transform.y += timeMultiplier * transform.ySpeed;
 
-        for (Planet p1 : planets) {
+        for (T p1 : planets) {
             if (p == p1) {
                 continue;
             }
@@ -20,16 +20,16 @@ public class PhysicsUtility {
         }
     }
 
-    public static void updateParticle(Particle p, List<Particle> particles, double timeMultiplier) {
+    public void updateParticle(T p, List<T> particles, double timeMultiplier) {
 
     }
 
     // TODO: move updatePlanet code here, have both of them call this
-    private static void update() {
+    private void update() {
 
     }
 
-    private static double distance(Planet p1, Planet p2) {
+    private double distance(T p1, T p2) {
         Transform t1 = p1.getTransform();
         Transform t2 = p2.getTransform();
 

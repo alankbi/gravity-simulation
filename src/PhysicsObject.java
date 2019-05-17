@@ -1,17 +1,17 @@
 import java.awt.Color;
 
-public interface PhysicsObject {
-    Transform getTransform();
+public abstract class PhysicsObject {
+    public abstract Transform getTransform();
 
-    double getMass();
+    public abstract double getMass();
 
-    void setMass(double mass);
+    public abstract void setMass(double mass);
 
-    int getRadius();
+    public abstract int getRadius();
 
-    void setRadius(int radius);
+    public abstract void setRadius(int radius);
 
-    Color getColor();
+    public abstract Color getColor();
 
-    double getConstant();
+    public abstract double getConstant();
 }

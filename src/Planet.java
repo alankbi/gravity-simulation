@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by AlanBi on 5/17/18.
  */
-public class Planet implements Cloneable, PhysicsObject {
+public class Planet extends PhysicsObject implements Cloneable {
     private Transform transform;
     private double mass;
 
@@ -16,6 +16,7 @@ public class Planet implements Cloneable, PhysicsObject {
     private static final double G = 6.67e-11;
     private static final Color[] colors = {Color.WHITE, Color.YELLOW, Color.CYAN, Color.ORANGE, Color.GREEN};
 
+    private MovementManager<Planet> movementManager;
 
     public Planet(double x, double y, double xSpeed, double ySpeed, double mass) {
         this.transform = new Transform(x, y, xSpeed, ySpeed);
@@ -23,6 +24,8 @@ public class Planet implements Cloneable, PhysicsObject {
 
         this.radius = planetRadius(this.mass);
         this.color = colors[new Random().nextInt(colors.length)];
+
+        movementManager = new MovementManager();
     }
 
     public Planet(Planet p) {
@@ -30,7 +33,7 @@ public class Planet implements Cloneable, PhysicsObject {
     }
 
     public void update(List<Planet> planets, double timeMultiplier) {
-        PhysicsUtility.updatePlanet(this, planets, timeMultiplier);
+        movementManager.updatePlanet(this, planets, timeMultiplier);
     }
 
     public static int planetRadius(double mass) {
