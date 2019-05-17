@@ -8,7 +8,6 @@ import java.util.Random;
 public class Planet extends PhysicsObject implements Cloneable {
     private Transform transform;
     private double mass;
-
     private int radius;
 
     private final Color color;
@@ -25,7 +24,7 @@ public class Planet extends PhysicsObject implements Cloneable {
         this.radius = planetRadius(this.mass);
         this.color = colors[new Random().nextInt(colors.length)];
 
-        movementManager = new MovementManager();
+        movementManager = new MovementManager<>();
     }
 
     public Planet(Planet p) {
@@ -33,7 +32,7 @@ public class Planet extends PhysicsObject implements Cloneable {
     }
 
     public void update(List<Planet> planets, double timeMultiplier) {
-        movementManager.updatePlanet(this, planets, timeMultiplier);
+        movementManager.update(this, planets, timeMultiplier);
     }
 
     public static int planetRadius(double mass) {
@@ -50,6 +49,10 @@ public class Planet extends PhysicsObject implements Cloneable {
 
     public void setMass(double mass) {
         this.mass = mass;
+    }
+
+    public double getMagnitude() {
+        return mass;
     }
 
     public int getRadius() {

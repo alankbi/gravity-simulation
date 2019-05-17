@@ -7,6 +7,9 @@ public abstract class PhysicsObject {
 
     public abstract void setMass(double mass);
 
+    // Mass for Planet, charge for Particle
+    public abstract double getMagnitude();
+
     public abstract int getRadius();
 
     public abstract void setRadius(int radius);

@@ -1,15 +1,17 @@
 import java.awt.Color;
 import java.util.List;
 
-public class Particle implements Cloneable {
-    public Transform transform;
-    public double mass;
-    public double charge;
-    public int radius;
+public class Particle extends PhysicsObject implements Cloneable {
+    private Transform transform;
+    private double mass;
+    private double charge;
+    private int radius;
 
-    public Color color;
+    private final Color color;
 
-    public static final double K = 8.99e9;
+    private static final double K = 8.99e9;
+
+    private MovementManager<Particle> movementManager;
 
     public Particle(double x, double y, double xSpeed, double ySpeed, double mass, double charge) {
         this.transform = new Transform(x, y, xSpeed, ySpeed);
@@ -24,6 +26,8 @@ public class Particle implements Cloneable {
         } else {
             this.color = Color.GRAY;
         }
+
+        movementManager = new MovementManager<>();
     }
 
     public Particle(Particle p) {
@@ -31,28 +35,42 @@ public class Particle implements Cloneable {
     }
 
     public void update(List<Particle> particles, double timeMultiplier) {
-        this.transform.x += timeMultiplier * this.transform.xSpeed;
-        this.transform.y += timeMultiplier * this.transform.ySpeed;
-
-        for (Particle p : particles) {
-            if (this == p) {
-                continue;
-            }
-
-            double r = distance(this, p);
-            double force = Particle.K * this.charge * p.charge / (r * r);
-
-            this.transform.xSpeed += timeMultiplier * (p.transform.x - this.transform.x) * force / (this.mass * r);
-            this.transform.ySpeed += timeMultiplier * (p.transform.y - this.transform.y) * force / (this.mass * r);
-        }
-    }
-
-    private static double distance(Particle p1, Particle p2) {
-        return Math.sqrt((p1.transform.x - p2.transform.x) * (p1.transform.x - p2.transform.x) +
-                (p1.transform.y - p2.transform.y) * (p1.transform.y - p2.transform.y)) * 1e-9;
+        movementManager.update(this, particles, timeMultiplier);
     }
 
     public static int particleRadius(double mass) {
         return (int) Math.log(mass * 1e50) / 5;
+    }
+
+    public Transform getTransform() {
+        return transform;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
+
+    public double getMagnitude() {
+        return charge;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public double getConstant() {
+        return K;
     }
 }
