@@ -34,8 +34,8 @@ public class Particle extends PhysicsObject implements Cloneable {
         this(p.transform.x, p.transform.y, p.transform.xSpeed, p.transform.ySpeed, p.mass, p.charge);
     }
 
-    public void update(List<Particle> particles, double timeMultiplier) {
-        movementManager.update(this, particles, timeMultiplier);
+    public void update(List<? extends PhysicsObject> particles, double timeMultiplier) {
+        movementManager.update(this, (List<Particle>) particles, timeMultiplier);
     }
 
     public static int particleRadius(double mass) {

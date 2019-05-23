@@ -22,12 +22,12 @@ import javax.swing.event.ChangeListener;
 /**
  * Created by AlanBi on 5/21/18.
  */
-public class Panel extends JPanel {
+public class Panel<T extends PhysicsObject> extends JPanel {
 
     private int X;
     private int Y;
 
-    public Planet newPlanet;
+    public T newPlanet;
     public boolean addPlanet;
     public boolean showPlanet;
     public boolean reset;
@@ -40,7 +40,12 @@ public class Panel extends JPanel {
         this.X = X;
         this.Y = Y;
 
-        newPlanet = new Planet(0, 0, 0, 0, 0);
+        if (Main.isGravitySim) {
+            newPlanet = (T) new Planet(0, 0, 0, 0, 0);
+        } else {
+            newPlanet = (T) new Particle(0, 0, 0, 0, 0, 0);
+        }
+
         addPlanet = false;
         showPlanet = true;
         reset = false;
@@ -239,7 +244,7 @@ public class Panel extends JPanel {
         label.setPreferredSize(new Dimension(X / 4, Y / 5));
         panel.add(label);
 
-        JSpinner spinner2 = new JSpinner(new SpinnerNumberModel(0, 0, 50, 1));
+        JSpinner spinner2 = new JSpinner(new SpinnerNumberModel(0, -50, 50, 1));
         spinner2.setMaximumSize(new Dimension(X / 4, Y / 5));
         spinner2.addChangeListener(new ChangeListener() {
             @Override

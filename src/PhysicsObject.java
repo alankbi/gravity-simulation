@@ -1,6 +1,9 @@
 import java.awt.Color;
+import java.util.List;
 
 public abstract class PhysicsObject {
+    public abstract void update(List<? extends PhysicsObject> physicsObjects, double timeMultiplier);
+
     public abstract Transform getTransform();
 
     public abstract double getMass();

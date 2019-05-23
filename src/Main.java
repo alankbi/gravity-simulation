@@ -12,6 +12,8 @@ public class Main extends JFrame {
     public static final int DEFAULT_X = 800;
     public static final int DEFAULT_Y = 600;
 
+    public static boolean isGravitySim = false;
+
     public Main() {
         this(DEFAULT_X, DEFAULT_Y);
     }
@@ -24,9 +26,9 @@ public class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
 
-        panel = new Panel(X / 4, Y, X, Y);
+        panel = new Panel<Particle>(X / 4, Y, X, Y);
 
-        sim = new Simulation(panel, 3 * X, Y);
+        sim = new Simulation<Particle>(panel, 3 * X, Y);
         add(sim);
 
         add(panel);

@@ -31,8 +31,8 @@ public class Planet extends PhysicsObject implements Cloneable {
         this(p.transform.x, p.transform.y, p.transform.xSpeed, p.transform.ySpeed, p.mass);
     }
 
-    public void update(List<Planet> planets, double timeMultiplier) {
-        movementManager.update(this, planets, timeMultiplier);
+    public void update(List<? extends PhysicsObject> planets, double timeMultiplier) {
+        movementManager.update(this, (List<Planet>) planets, timeMultiplier);
     }
 
     public static int planetRadius(double mass) {
